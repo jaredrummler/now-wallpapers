@@ -20,10 +20,35 @@ package com.jaredrummler.wallpapers.googlenow;
 import com.github.kevinsawicki.http.HttpRequest;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Main {
 
   public static void main(String[] args) {
+    if (true) {
+      // make README
+      StringBuilder sb = new StringBuilder("# now-wallpapers");
+      sb.append("\n44 Google Now Wallpapers\n\n");
+      for (NowWallpaper wallpaper : NowWallpaper.values()) {
+        String[] names = {"dawn", "day", "dusk", "night"};
+        for (String name : names) {
+          String relativePath = "google-now-wallpapers/888px/"
+              + wallpaper.name().toLowerCase() + "_" + name + ".jpg";
+          String alt = wallpaper.name().toLowerCase() + " " + name;
+          sb.append("![").append(alt).append("](").append(relativePath).append("?raw=true ")
+              .append("\"").append(alt).append("\")\n");
+        }
+      }
+      try {
+        Files.write(Paths.get("README.md"), sb.toString().getBytes());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
+    }
+
     // Download Google Now wallpapers for 888, 1080, and 2560px
     File directory = new File("google-now-wallpapers");
     for (NowWallpaper wallpaper : NowWallpaper.values()) {
